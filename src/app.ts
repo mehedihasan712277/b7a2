@@ -1,12 +1,11 @@
 import express, { type Application, type Request, type Response } from "express";
 import { userRouter } from "./modules/user/user.route";
-import { profileRouter } from "./modules/profile/profile.route";
-import { authRoute } from "./modules/auth/auth.route";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import logger from "./middleware/logger";
 import globalErrorHandler from "./middleware/globalErrorHandler";
+import { authRoute } from "./modules/authentication/auth.route";
 
 const app: Application = express();
 
@@ -25,7 +24,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/users", userRouter);
-app.use("/api/profiles", profileRouter);
 app.use("/api/auth", authRoute);
 
 app.use(globalErrorHandler);
