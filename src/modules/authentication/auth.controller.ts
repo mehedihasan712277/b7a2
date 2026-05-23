@@ -41,17 +41,14 @@ const refreshToken = async (req: Request, res: Response) => {
     try {
         const result = await authService.generateFreshToken(req.cookies.refreshToken);
 
-        res.status(200).json({
+        sendResponse(res, {
+            statusCode: 200,
             success: true,
             message: "Access token generated",
             data: result,
         });
     } catch (error: any) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-            error: error,
-        });
+        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
     }
 };
 
