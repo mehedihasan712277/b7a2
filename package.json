@@ -1,5 +1,5 @@
 {
-    "name": "express",
+    "name": "assignment_2",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -7,7 +7,7 @@
         "dev": "tsx watch ./src/server.ts"
     },
     "keywords": [],
-    "author": "",
+    "author": "Md. Mehedi Hasan",
     "license": "ISC",
     "type": "module",
     "devDependencies": {
