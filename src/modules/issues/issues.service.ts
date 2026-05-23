@@ -17,6 +17,67 @@ const createIssueIntoDB = async (payload: IIssue, id: string) => {
     return result;
 };
 
+const getAllIssuesFromDB = async () => {
+    const result = await pool.query(`
+        SELECT 
+            issues.id,
+            issues.title,
+            issues.description,
+            issues.type,
+            issues.status,
+
+            json_build_object(
+                'id', users.id,
+                'name', users.name,
+                'role', users.role
+            ) AS reporter,
+
+            issues.created_at,
+            issues.updated_at
+
+        FROM issues
+
+        JOIN users
+        ON issues.reporter_id = users.id
+    `);
+
+    return result;
+};
+
+const getOneIssueFromDB = async (id: string) => {
+    const result = await pool.query(
+        `
+        SELECT 
+            issues.id,
+            issues.title,
+            issues.description,
+            issues.type,
+            issues.status,
+
+            json_build_object(
+                'id', users.id,
+                'name', users.name,
+                'role', users.role
+            ) AS reporter,
+
+            issues.created_at,
+            issues.updated_at
+
+        FROM issues
+
+        JOIN users
+        ON issues.reporter_id = users.id
+
+        WHERE issues.id = $1
+        `,
+        [id],
+    );
+
+    return result;
+};
+
 export const issueService = {
     createIssueIntoDB,
+    getAllIssuesFromDB,
+    getOneIssueFromDB,
 };

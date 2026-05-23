@@ -6,8 +6,8 @@ import { USER_ROLE } from "../../types";
 const router = Router();
 
 router.post("/", auth(), issueController.createIssue);
-// router.get("/");
-// router.get("/:id");
+router.get("/", issueController.getAllIssues);
+router.get("/:id", issueController.getSingleIssue);
 // router.put("/:id");
 // router.delete("/:id");
 
