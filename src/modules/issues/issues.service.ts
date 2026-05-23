@@ -9,7 +9,7 @@ const createIssueIntoDB = async (payload: IIssue, id: string) => {
     }
     const result = await pool.query(
         `
-        INSERT INTO issues(title, description, type, status, reporter_id) VALUES($1, $2, $3, $4, $5)
+        INSERT INTO issues(title, description, type, status, reporter_id) VALUES($1, $2, $3, COALESCE($4,'open'), $5)
         RETURNING *
         `,
         [title, description, type, status, id],
