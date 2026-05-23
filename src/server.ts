@@ -1,12 +1,18 @@
 import app from "./app";
-// import config from "./config";
+import config from "./config";
 import { initDB } from "./db";
 
 const main = async () => {
-    await initDB(); // Make sure this is async if needed
+    try {
+        await initDB();
+        console.log("Database initialized successfully");
+    } catch (error) {
+        console.error("Database initialization failed:", error);
+    }
 };
 
+// Run initialization (for cold starts)
 main();
 
-// Export the Express app for Vercel (this is crucial)
+// Export app for Vercel Serverless
 export default app;
