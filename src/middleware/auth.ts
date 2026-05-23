@@ -14,9 +14,9 @@ const auth = (...roles: ROLES[]) => {
             const decoded = jwt.verify(token as string, config.SECRET) as JwtPayload;
             const userData = await pool.query(
                 `
-            SELECT * FROM users WHERE email=$1
+            SELECT * FROM users WHERE id=$1
             `,
-                [decoded.email],
+                [decoded.id],
             );
             if (userData.rows.length === 0) {
                 res.status(404).json({ message: "User not found" });

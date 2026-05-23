@@ -1,4 +1,5 @@
 import { pool } from "../../db";
+import { USER_ROLE } from "../../types";
 import type { IIssue } from "./issues.interface";
 
 const createIssueIntoDB = async (payload: IIssue, id: string) => {
@@ -76,8 +77,61 @@ const getOneIssueFromDB = async (id: string) => {
     return result;
 };
 
+const updateIssueFromDB = async (payload: IIssue, id: string, user: { id: number; name: string; role: string } | null) => {
+    const { title, description, type } = payload;
+
+    const issue = await pool.query(
+        `
+            SELECT * FROM issues
+            WHERE id=$1
+            `,
+        [id],
+    );
+    if (issue.rows.length === 0) {
+        throw new Error("Issue not found");
+    }
+    const { reporter_id, status } = issue.rows[0];
+
+    if (user?.role === USER_ROLE.contributor && user.id === reporter_id && status === "open") {
+        const result = await pool.query(
+            `
+            UPDATE issues
+            
+            SET
+            
+            title=COALESCE($1,title),
+            description=COALESCE($2,description),
+            type=COALESCE($3,type)
+            
+            WHERE id=$4 RETURNING *
+            `,
+            [title, description, type, id],
+        );
+        return result;
+    } else if (user?.role === USER_ROLE.maintainer) {
+        const result = await pool.query(
+            `
+            UPDATE issues
+            
+            SET
+            
+            title=COALESCE($1,title),
+            description=COALESCE($2,description),
+            type=COALESCE($3,type)
+            
+            WHERE id=$4 RETURNING *
+            `,
+            [title, description, type, id],
+        );
+        return result;
+    } else {
+        throw new Error("Cannot be updated");
+    }
+};
+
 export const issueService = {
     createIssueIntoDB,
     getAllIssuesFromDB,
     getOneIssueFromDB,
+    updateIssueFromDB,
 };

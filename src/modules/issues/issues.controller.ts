@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import sendResponse from "../../utility/sendResponse";
 import { issueService } from "./issues.service";
+import type { JwtPayload } from "jsonwebtoken";
 
 const createIssue = async (req: Request, res: Response) => {
     try {
@@ -36,7 +37,7 @@ const getSingleIssue = async (req: Request, res: Response) => {
         if (result.rows.length === 0) {
             res.status(404).json({
                 success: false,
-                message: "Users not found",
+                message: "Issue not found",
                 data: result.rows,
             });
         }
@@ -49,4 +50,31 @@ const getSingleIssue = async (req: Request, res: Response) => {
     }
 };
 
-export const issueController = { createIssue, getAllIssues, getSingleIssue };
+const updateIssue = async (req: Request, res: Response) => {
+    const { id: iId } = req.params;
+    const { id, name, role } = req.user as JwtPayload & {
+        id: number;
+        name: string;
+        role: string;
+    };
+    try {
+        const result = await issueService.updateIssueFromDB(req.body, iId as string, { id, name, role });
+
+        if (result.rows.length === 0) {
+            res.status(404).json({
+                success: false,
+                message: "Issue not found",
+                data: result.rows,
+            });
+        }
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: "Issue updated successfully",
+            data: result.rows[0],
+        });
+    } catch (error: any) {
+        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    }
+};
+export const issueController = { createIssue, getAllIssues, getSingleIssue, updateIssue };
