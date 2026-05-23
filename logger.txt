@@ -316,3 +316,11 @@ Method -> POST - Time -> 1779552945877 - URL -> /api/auth/login
 Method -> DELETE - Time -> 1779552960043 - URL -> /api/issues/11
 
 Method -> DELETE - Time -> 1779553034122 - URL -> /api/issues/12
+
+Method -> GET - Time -> 1779553422610 - URL -> /api/issues/13
+
+Method -> GET - Time -> 1779553501967 - URL -> /api/issues
+
+Method -> POST - Time -> 1779553695183 - URL -> /api/auth/login
+
+Method -> PATCH - Time -> 1779553786162 - URL -> /api/issues/13

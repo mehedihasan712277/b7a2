@@ -78,8 +78,6 @@ const getOneIssueFromDB = async (id: string) => {
 };
 
 const updateIssueFromDB = async (payload: IIssue, id: string, user: { id: number; name: string; role: string } | null) => {
-    const { title, description, type } = payload;
-
     const issue = await pool.query(
         `
             SELECT * FROM issues
@@ -102,27 +100,33 @@ const updateIssueFromDB = async (payload: IIssue, id: string, user: { id: number
             title=COALESCE($1,title),
             description=COALESCE($2,description),
             type=COALESCE($3,type)
+            updated_at = NOW()
             
             WHERE id=$4 RETURNING *
             `,
-            [title, description, type, id],
+            [payload.title, payload.description, payload.type, id],
         );
         return result;
     } else if (user?.role === USER_ROLE.maintainer) {
         const result = await pool.query(
             `
-            UPDATE issues
-            
-            SET
-            
-            title=COALESCE($1,title),
-            description=COALESCE($2,description),
-            type=COALESCE($3,type)
-            
-            WHERE id=$4 RETURNING *
-            `,
-            [title, description, type, id],
+        UPDATE issues
+        
+        SET
+            title = COALESCE($1, title),
+            description = COALESCE($2, description),
+            type = COALESCE($3, type),
+            status = COALESCE($4, status),
+            reporter_id = COALESCE($5, reporter_id),
+            updated_at = NOW()
+
+        WHERE id = $6
+        
+        RETURNING *
+        `,
+            [payload.title, payload.description, payload.type, payload.status, payload.reporter_id, id],
         );
+
         return result;
     } else {
         throw new Error("Cannot be updated");

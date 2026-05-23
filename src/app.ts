@@ -1,5 +1,4 @@
 import express, { type Application, type Request, type Response } from "express";
-import { userRouter } from "./modules/user/user.route";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -24,7 +23,6 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Server is running");
 });
 
-app.use("/api/users", userRouter);
 app.use("/api/auth", authRoute);
 app.use("/api/issues", issuesRouter);
 
