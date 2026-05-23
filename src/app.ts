@@ -6,6 +6,7 @@ import cors from "cors";
 import logger from "./middleware/logger";
 import globalErrorHandler from "./middleware/globalErrorHandler";
 import { authRoute } from "./modules/authentication/auth.route";
+import { issuesRouter } from "./modules/issues/issues.routes";
 
 const app: Application = express();
 
@@ -20,11 +21,12 @@ const corsOption = {
 app.use(cors(corsOption));
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World!");
+    res.send("Server is running");
 });
 
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRoute);
+app.use("/api/issues", issuesRouter);
 
 app.use(globalErrorHandler);
 export default app;

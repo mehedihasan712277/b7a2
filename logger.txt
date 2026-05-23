@@ -122,3 +122,25 @@ Method -> GET - Time -> 1779519732268 - URL -> /api/users
 Method -> POST - Time -> 1779520480504 - URL -> /api/users
 
 Method -> POST - Time -> 1779520485587 - URL -> /api/users
+
+Method -> POST - Time -> 1779539283243 - URL -> /api/issues
+
+Method -> POST - Time -> 1779539344024 - URL -> /api/issues
+
+Method -> POST - Time -> 1779539458859 - URL -> /api/issues
+
+Method -> POST - Time -> 1779540603659 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541340248 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541383998 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541428359 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541826521 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541847802 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541934497 - URL -> /api/auth/signup
+
+Method -> POST - Time -> 1779541981672 - URL -> /api/auth/signup

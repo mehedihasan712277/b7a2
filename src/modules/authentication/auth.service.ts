@@ -4,6 +4,23 @@ import { pool } from "./../../db/index";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import config from "../../config";
 
+const createUserIntoDB = async (payload: { name: string; email: string; password: string; role: string }) => {
+    const { name, email, password, role } = payload;
+    const hasgedPassword = await bcrypt.hash(password, 10);
+
+    const result = await pool.query(
+        `
+            INSERT INTO users(name, email, password, role) VALUES($1, $2, $3, COALESCE($4,'contributor'))
+            RETURNING *
+            
+            `,
+        [name, email, hasgedPassword, role],
+    );
+    delete result.rows[0].password;
+
+    return result;
+};
+
 const loginUserIntoDB = async (payload: { email: string; password: string }) => {
     const { email, password } = payload;
 
@@ -83,6 +100,7 @@ const generateFreshToken = async (token: string) => {
 };
 
 export const authService = {
+    createUserIntoDB,
     loginUserIntoDB,
     generateFreshToken,
 };

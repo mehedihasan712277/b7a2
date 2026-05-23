@@ -2,14 +2,14 @@ export type IssueType = "bug" | "feature_request";
 
 export type IssueStatus = "open" | "in_progress" | "resolved";
 
-export interface Issue {
-    id: number;
+export interface IIssue {
+    // id: number;
     title: string;
     description: string;
     type: IssueType;
     status: IssueStatus;
     reporter_id: number;
 
-    created_at: Date;
-    updated_at: Date;
+    // created_at: Date;
+    // updated_at: Date;
 }
