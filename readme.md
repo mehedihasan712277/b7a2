@@ -9,7 +9,7 @@
 > _(Replace with your deployed link)_
 
 ```
-https://devpulse-api.vercel.app
+https://b7a2-six.vercel.app
 ```
 
 ---
