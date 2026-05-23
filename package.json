@@ -2,12 +2,11 @@
     "name": "assignment_2",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/server.js",
+    "main": "index.js",
     "scripts": {
-        "dev": "tsx watch ./src/server.ts",
-        "build": "tsc",
         "start": "node dist/server.js",
-        "vercel-build": "tsc"
+        "dev": "tsx watch ./src/server.ts",
+        "build": "tsc"
     },
     "keywords": [],
     "author": "",
@@ -29,6 +28,7 @@
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "jsonwebtoken": "^9.0.3",
-        "pg": "^8.21.0"
+        "pg": "^8.21.0",
+        "tsup": "^8.5.1"
     }
 }

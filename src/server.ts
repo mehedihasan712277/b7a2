@@ -2,17 +2,11 @@ import app from "./app";
 import config from "./config";
 import { initDB } from "./db";
 
-const main = async () => {
-    try {
-        await initDB();
-        console.log("Database initialized successfully");
-    } catch (error) {
-        console.error("Database initialization failed:", error);
-    }
+const main = () => {
+    initDB();
+    app.listen(config.PORT, () => {
+        console.log(`Example app listening on port ${config.PORT}`);
+    });
 };
 
-// Run initialization (for cold starts)
 main();
-
-// Export app for Vercel Serverless
-export default app;
