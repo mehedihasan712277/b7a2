@@ -24,10 +24,6 @@ const auth = (...roles: ROLES[]) => {
 
             const user = userData.rows[0];
 
-            if (!user.is_active) {
-                res.status(403).json({ message: "Forbidden" });
-            }
-
             if (roles.length && !roles.includes(user.role)) {
                 res.status(403).json({ message: "Forbidden. The role does not have access" });
             }

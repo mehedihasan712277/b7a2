@@ -46,8 +46,6 @@ const loginUserIntoDB = async (payload: { email: string; password: string }) => 
     const jwtpayload = {
         id: user.id,
         name: user.name,
-        is_active: user.is_active,
-        email: user.email,
         role: user.role,
     };
 
@@ -89,8 +87,6 @@ const generateFreshToken = async (token: string) => {
     const jwtpayload = {
         id: user.id,
         name: user.name,
-        is_active: user.is_active,
-        email: user.email,
         role: user.role,
     };
 
