@@ -59,7 +59,9 @@ const loginUserIntoDB = async (payload: { email: string; password: string }) => 
         expiresIn: "10d",
     });
 
-    return { accessToken, refreshToken };
+    delete userData.rows[0].password;
+
+    return { accessToken, refreshToken, user: userData.rows[0] };
 };
 
 const generateFreshToken = async (token: string) => {

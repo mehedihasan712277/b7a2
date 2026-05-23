@@ -23,18 +23,17 @@ const loginUser = async (req: Request, res: Response) => {
             httpOnly: true,
             sameSite: "lax",
         });
-
-        res.status(200).json({
+        sendResponse(res, {
+            statusCode: 200,
             success: true,
-            message: "User logged in successfully!",
-            data: result,
+            message: "Login successful",
+            data: {
+                token: result.accessToken,
+                user: result.user,
+            },
         });
     } catch (error: any) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-            error: error,
-        });
+        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
     }
 };
 
