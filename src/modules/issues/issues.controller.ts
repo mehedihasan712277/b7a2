@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import sendResponse from "../../utility/sendResponse";
+import sendResponse from "../../utils/sendResponse";
 import { issueService } from "./issues.service";
 import type { JwtPayload } from "jsonwebtoken";
 
