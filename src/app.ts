@@ -2,7 +2,6 @@ import express, { type Application, type Request, type Response } from "express"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import logger from "./middleware/logger";
 import globalErrorHandler from "./middleware/globalErrorHandler";
 import { authRoute } from "./modules/authentication/auth.route";
 import { issuesRouter } from "./modules/issues/issues.routes";
@@ -13,7 +12,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
-app.use(logger);
 const corsOption = {
     origin: "http://localhost:300",
 };
