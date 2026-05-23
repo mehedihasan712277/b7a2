@@ -1,14 +1,20 @@
 import type { Request, Response } from "express";
 import { authService } from "./auth.service";
 import sendResponse from "../../utils/sendResponse";
+import { getErrorMessage } from "../../utils/errorMessageHandler";
 
 const signUp = async (req: Request, res: Response) => {
     try {
         const result = await authService.createUserIntoDB(req.body);
 
         sendResponse(res, { statusCode: 201, success: true, message: "User registered successfully", data: result.rows[0] });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 
@@ -32,8 +38,13 @@ const loginUser = async (req: Request, res: Response) => {
                 user: result.user,
             },
         });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 
@@ -47,8 +58,13 @@ const refreshToken = async (req: Request, res: Response) => {
             message: "Access token generated",
             data: result,
         });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 

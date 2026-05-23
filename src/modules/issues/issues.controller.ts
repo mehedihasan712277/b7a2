@@ -2,15 +2,20 @@ import type { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import { issueService } from "./issues.service";
 import type { JwtPayload } from "jsonwebtoken";
+import { getErrorMessage } from "../../utils/errorMessageHandler";
 
 const createIssue = async (req: Request, res: Response) => {
     try {
         const result = await issueService.createIssueIntoDB(req.body, req.user?.id || "");
 
         sendResponse(res, { statusCode: 201, success: true, message: "Issue created successfully", data: result.rows[0] });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
-        console.log(error);
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 
@@ -23,8 +28,13 @@ const getAllIssues = async (req: Request, res: Response) => {
             success: true,
             data: result.rows,
         });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 
@@ -47,8 +57,13 @@ const getSingleIssue = async (req: Request, res: Response) => {
             success: true,
             data: result.rows[0],
         });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 
@@ -75,8 +90,13 @@ const updateIssue = async (req: Request, res: Response) => {
             message: "Issue updated successfully",
             data: result.rows[0],
         });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 
@@ -99,8 +119,13 @@ const deleteIssue = async (req: Request, res: Response) => {
             success: true,
             message: "Issue deleted successfully",
         });
-    } catch (error: any) {
-        sendResponse(res, { statusCode: 500, success: false, message: error.message || "", error: error });
+    } catch (error: unknown) {
+        sendResponse(res, {
+            statusCode: 500,
+            success: false,
+            message: getErrorMessage(error),
+            error,
+        });
     }
 };
 export const issueController = { createIssue, getAllIssues, getSingleIssue, updateIssue, deleteIssue };
